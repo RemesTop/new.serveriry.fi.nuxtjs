@@ -1,4 +1,4 @@
-name: Playwright Tests
+name: Playwright Tests (v2)
 on:
   workflow_dispatch:
   push:
@@ -28,6 +28,7 @@ jobs:
         version: 9
     - name: Install dependencies
       run: |
+        echo "workflow-revision=v2-clean-install"
         pnpm install --no-frozen-lockfile
         node -e "require.resolve('@oxc-parser/binding-linux-x64-gnu')"
     - name: Install Playwright Browsers
