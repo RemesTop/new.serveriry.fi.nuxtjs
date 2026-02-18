@@ -23,12 +23,16 @@ jobs:
         version: 9
     - name: Install dependencies
       run: |
-        pnpm install --frozen-lockfile --ignore-scripts
+        pnpm install --no-frozen-lockfile --ignore-scripts
         if ! node -e "require.resolve('@oxc-parser/binding-linux-x64-gnu')"; then
           echo "Missing oxc native binding, retrying clean install..."
           rm -rf node_modules
           pnpm store prune
-          pnpm install --frozen-lockfile --ignore-scripts --force
+          pnpm install --no-frozen-lockfile --ignore-scripts --force
+        fi
+        if ! node -e "require.resolve('@oxc-parser/binding-linux-x64-gnu')"; then
+          echo "Installing missing oxc Linux binding explicitly..."
+          pnpm add -D @oxc-parser/binding-linux-x64-gnu --no-save
         fi
         node -e "require.resolve('@oxc-parser/binding-linux-x64-gnu')"
         pnpm exec nuxt prepare
