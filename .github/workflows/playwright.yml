@@ -17,25 +17,19 @@ jobs:
     - uses: actions/setup-node@v4
       with:
         node-version: 20
+    - name: CI diagnostics
+      run: |
+        echo "ref=${GITHUB_REF}"
+        echo "sha=${GITHUB_SHA}"
+        pnpm --version || true
     - name: Install pnpm
       uses: pnpm/action-setup@v3
       with:
         version: 9
     - name: Install dependencies
       run: |
-        pnpm install --no-frozen-lockfile --ignore-scripts
-        if ! node -e "require.resolve('@oxc-parser/binding-linux-x64-gnu')"; then
-          echo "Missing oxc native binding, retrying clean install..."
-          rm -rf node_modules
-          pnpm store prune
-          pnpm install --no-frozen-lockfile --ignore-scripts --force
-        fi
-        if ! node -e "require.resolve('@oxc-parser/binding-linux-x64-gnu')"; then
-          echo "Installing missing oxc Linux binding explicitly..."
-          pnpm add -D @oxc-parser/binding-linux-x64-gnu@0.110.0
-        fi
+        pnpm install --no-frozen-lockfile
         node -e "require.resolve('@oxc-parser/binding-linux-x64-gnu')"
-        pnpm exec nuxt prepare
     - name: Install Playwright Browsers
       run: pnpm exec playwright install --with-deps
     - name: Run Playwright tests
