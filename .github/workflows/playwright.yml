@@ -36,7 +36,7 @@ jobs:
     - name: Install dependencies
       run: |
         echo "workflow-revision=v3-container-cache"
-        pnpm install --no-frozen-lockfile
+        pnpm install --frozen-lockfile
         node -e "require.resolve('@oxc-parser/binding-linux-x64-gnu')"
     - name: Run Playwright tests
       run: pnpm test:e2e
