@@ -75,7 +75,10 @@ This repository includes `.actrc` to hard-code the local runner mapping so `act`
 ### Prerequisites
 
 1. Docker Desktop running
-2. `act` installed (`winget install nektos.act`)
+2. `act` installed, for example:
+   - Windows: `winget install nektos.act`
+   - macOS: `brew install act`
+   - Linux: `brew install act` (via Homebrew on Linux) or see https://github.com/nektos/act#installation
 
 ### Run the Playwright workflow locally
 
